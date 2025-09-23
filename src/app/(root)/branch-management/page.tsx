@@ -5,14 +5,16 @@ import { Status } from "@/types";
 import { useRouter } from "next/navigation";
 import DataTable, { Column } from "@/components/common/DataTable";
 
-const SchoolManagement = () => {
+const BranchManagement = () => {
   const router = useRouter();
   // Mock daycare data based on the image
   const data = Array(10)
     .fill(null)
     .map((_, index) => ({
       id: index + 1,
-      daycareName: "Building Blocks Academy",
+      branchId: "BBA-P001",
+      daycare: "Building Blocks Academy",
+      branch: "Building Blocks Academy",
       daycareId: `BBA-P001`,
       date: "2028-09-20",
       time: "09:00 AM",
@@ -23,24 +25,22 @@ const SchoolManagement = () => {
     }));
   const columns: Column<(typeof data)[0]>[] = [
     {
-      name: "Daycare Name",
-      key: "daycareName",
+      name: "Branch ID",
+      key: "branchId",
       sortable: true,
       render: (row) => (
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#8B5CF6] rounded-full flex items-center justify-center text-white text-sm font-medium">
-            B
-          </div>
-          <span className="text-sm font-normal text-[#0B0B13]">{row.daycareName}</span>
-        </div>
+        <span className="text-sm text-[#8B5CF6] font-normal">{row.branchId}</span>
       ),
     },
     {
-      name: "Daycare ID",
-      key: "daycareId",
+      name: "daycare & branch name",
+      key: "daycare&branch name",
       sortable: true,
       render: (row) => (
-        <span className="text-sm text-[#8B5CF6] font-normal">{row.daycareId}</span>
+        <div className="text-sm text-gray-700">
+          <div>{row.daycare}</div>
+          <div className="text-xs text-gray-500">{row.branch}</div>
+        </div>
       ),
     },
     {
@@ -116,12 +116,12 @@ const SchoolManagement = () => {
             </button>
           </div>
         )}
-        buttonText="Add New School"
-        buttonOnClick={() => router.push("/school-management/add")}
+        buttonText="Add New Branch"
+        buttonOnClick={() => router.push("/branch-management/add")}
       />
       </div>
     </>
   );
 };
 
-export default SchoolManagement;
+export default BranchManagement;

@@ -4,6 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@/icon";
 import Pagination from "./Pagination";
 import { Button } from "../ui/button";
 import { Plus, Search } from "lucide-react";
+import SearchInput from "../Inputs/SearchInput";
 
 export type Column<T> = {
   name: string;
@@ -128,32 +129,24 @@ const DataTable = <T extends { id: number }>({
         {/* Search */}
         <div className="flex items-center gap-2.5 w-full lg:w-auto">
           {searchable && (
-            <div className="w-full lg:w-[250px] min-w-[250px] relative">
-              <input
-                type="text"
-                placeholder="Search name, ID, age, etc"
-                className="bg-gray-200 w-full px-4 pl-10 py-2.5 rounded-sm border border-gray-200 text-gray-600 text-sm focus:outline-none focus:ring-1 focus:ring-[#842DF0]"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <div className="absolute left-3 top-1/2 -translate-y-1/2">
-                <Search size={16} className="text-gray-400" />
-              </div>
-            </div>
+            <SearchInput
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           )}
         </div>
         {/* Action Buttons */}
         {buttonText && buttonOnClick && (
-        <Button onClick={() => buttonOnClick?.()}>
-          <Plus size={16} />
-          <span>{buttonText}</span>
-        </Button>
+          <Button onClick={() => buttonOnClick?.()}>
+            <Plus size={16} />
+            <span>{buttonText}</span>
+          </Button>
         )}
       </div>
       <div>
         {/* Table */}
-        <div className="bg-white rounded-lg shadow overflow-x-auto custom-scrollbar">
-          <table className="w-full divide-y divide-gray-200 min-w-[1200px]">
+        <div className="bg-white rounded-lg overflow-x-auto custom-scrollbar">
+          <table className="w-full min-w-[1200px]">
             <thead className="bg-[#F5F5F6]">
               <tr>
                 {checkbox && (
@@ -166,13 +159,14 @@ const DataTable = <T extends { id: number }>({
                     />
                   </th>
                 )}
-                {columns.map((col) => (
+                {columns.map((col, i) => (
                   <th
-                    key={String(col.key)}
+                    key={i}
                     style={{ minWidth: col.minWidth }}
-                    className={`px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap ${
+                    className={`px-4 lg:px-6 py-3.5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap ${
                       col.sortable ? "cursor-pointer" : ""
-                    }`}
+                    }
+                    ${i === 0 ? "rounded-tl-lg rounded-bl-lg" : ""}`}
                     onClick={() => col.sortable && requestSort(String(col.key))}
                   >
                     <div className="flex items-center">
@@ -203,7 +197,11 @@ const DataTable = <T extends { id: number }>({
                   </th>
                 ))}
                 {actions && (
-                  <th className="px-4 py-3 text-xs min-w-[120px]">Actions</th>
+                  <th
+                    className={`px-4 lg:px-6 py-3.5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap rounded-tr-lg rounded-br-lg`}
+                  >
+                    Actions
+                  </th>
                 )}
               </tr>
             </thead>

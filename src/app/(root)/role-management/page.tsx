@@ -5,72 +5,54 @@ import { Status } from "@/types";
 import { useRouter } from "next/navigation";
 import DataTable, { Column } from "@/components/common/DataTable";
 
-const SchoolManagement = () => {
+const RoleManagement = () => {
   const router = useRouter();
-  // Mock daycare data based on the image
+  // Mock role data based on the image
   const data = Array(10)
     .fill(null)
     .map((_, index) => ({
       id: index + 1,
-      daycareName: "Building Blocks Academy",
-      daycareId: `BBA-P001`,
-      date: "2028-09-20",
-      time: "09:00 AM",
-      ownerName: "Abdul Qadir Parekh",
-      email: "info@buildingblocksacademy.net",
-      phone: "+1 786-555-4432",
+      roleId: "BBA-P001",
+      roleName: "Super Admin",
+      daycareName: "La Marque",
+      branchName: "Building Blocks Academy",
+      roleDescription: "Full control of the daycare system",
       status: "Active",
     }));
   const columns: Column<(typeof data)[0]>[] = [
     {
-      name: "Daycare Name",
+      name: "Role ID",
+      key: "roleId",
+      sortable: true,
+      render: (row) => (
+        <span className="text-sm text-[#8B5CF6] font-normal">{row.roleId}</span>
+      ),
+    },
+    {
+      name: "Role Name",
+      key: "roleName",
+      sortable: true,
+      render: (row) => (
+        <span className="text-sm font-medium text-gray-900">{row.roleName}</span>
+      ),
+    },
+    {
+      name: "Daycare & Branch Name",
       key: "daycareName",
       sortable: true,
       render: (row) => (
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#8B5CF6] rounded-full flex items-center justify-center text-white text-sm font-medium">
-            B
-          </div>
-          <span className="text-sm font-normal text-[#0B0B13]">{row.daycareName}</span>
-        </div>
-      ),
-    },
-    {
-      name: "Daycare ID",
-      key: "daycareId",
-      sortable: true,
-      render: (row) => (
-        <span className="text-sm text-[#8B5CF6] font-normal">{row.daycareId}</span>
-      ),
-    },
-    {
-      name: "Date",
-      key: "date",
-      sortable: true,
-      render: (row) => (
         <div className="text-sm text-gray-700">
-          <div>{row.date}</div>
-          <div className="text-xs text-gray-500">{row.time}</div>
+          <div>{row.daycareName}</div>
+          <div className="text-xs text-gray-500">{row.branchName}</div>
         </div>
       ),
     },
     {
-      name: "Owner Name",
-      key: "ownerName",
+      name: "Role Description",
+      key: "roleDescription",
       sortable: true,
       render: (row) => (
-        <span className="text-sm text-gray-700">{row.ownerName}</span>
-      ),
-    },
-    {
-      name: "Email & Phone Number",
-      key: "email",
-      sortable: true,
-      render: (row) => (
-        <div className="text-sm text-gray-700">
-          <div>{row.email}</div>
-          <div className="text-xs text-gray-500">{row.phone}</div>
-        </div>
+        <span className="text-sm text-gray-700">{row.roleDescription}</span>
       ),
     },
     {
@@ -116,12 +98,12 @@ const SchoolManagement = () => {
             </button>
           </div>
         )}
-        buttonText="Add New School"
-        buttonOnClick={() => router.push("/school-management/add")}
+        buttonText="Add New Role"
+        buttonOnClick={() => router.push("/role-management/add")}
       />
       </div>
     </>
   );
 };
 
-export default SchoolManagement;
+export default RoleManagement;

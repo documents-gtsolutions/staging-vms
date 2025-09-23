@@ -1,32 +1,34 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import TextInput from "@/components/Inputs/TextInput";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import TextAreaInput from "@/components/Inputs/TextAreaInput";
-import Image from "next/image";
 import SwitchInput from "@/components/Inputs/SwitchInput";
 import Alert from "@/components/common/Alert";
-import DropZone from "@/components/Inputs/Dropzone";
+import SelectInput from "@/components/Inputs/SelectInput";
+import DateInput from "@/components/Inputs/DateInput";
 
 type AddSchoolData = {
   daycare_id: string;
   daycare_name: string;
-  owner_name: string;
-  phone: string;
-  email: string;
-  city: string;
-  status: boolean;
+  branch_name: string;
+  branch_code: string;
+  branch_type: string;
+  address: string;
   state: string;
   country: string;
-  school_address: string;
+  contact_number: string;
+  email: string;
+  branch_incharge_name: string;
+  opening_date: string;
+  status: boolean;
   remarks: string;
 };
 
 const SchoolManagementAdd = () => {
   const router = useRouter();
-  const [companyLogo, setCompanyLogo] = useState<File | null>(null);
   const {
     register,
     handleSubmit,
@@ -38,37 +40,22 @@ const SchoolManagementAdd = () => {
     defaultValues: {
       daycare_id: "",
       daycare_name: "",
-      owner_name: "",
-      phone: "",
-      email: "",
-      city: "",
+      branch_name: "",
+      branch_code: "",
+      branch_type: "",
+      address: "",
       state: "",
       country: "",
-      school_address: "",
+      contact_number: "",
+      email: "",
+      branch_incharge_name: "",
+      opening_date: "",
       remarks: "",
       status: false,
     },
   });
-  const handleFileUpload = (file: File[]) => {
-    console.log("File uploaded:", file);
-    setCompanyLogo(file[0]);
-  };
   const onSubmit = (data: AddSchoolData) => {
     console.log("Submitted Data:", data);
-    const formData = new FormData();
-    formData.append("company_logo", companyLogo as File);
-    formData.append("daycare_id", data.daycare_id);
-    formData.append("daycare_name", data.daycare_name);
-    formData.append("owner_name", data.owner_name);
-    formData.append("phone", data.phone);
-    formData.append("email", data.email);
-    formData.append("city", data.city);
-    formData.append("state", data.state);
-    formData.append("country", data.country);
-    formData.append("school_address", data.school_address);
-    formData.append("remarks", data.remarks);
-    formData.append("status", data.status.toString());
-    console.log("Form Data:", formData);
     // You can add API call here
     reset(); // optional reset
     // router.push("/cms/school-management");
@@ -77,22 +64,6 @@ const SchoolManagementAdd = () => {
   return (
     <form className="flex flex-col gap-8" onSubmit={handleSubmit(onSubmit)}>
       <div className="bg-white rounded-lg shadow p-6 flex flex-col gap-6">
-        <div className="w-full flex justify-between gap-8">
-          <div className="">
-            <h3 className="text-sm font-medium text-gray-900">Company Logo</h3>
-            <p className="text-sm text-gray-700">
-              Upload a logo for your company
-            </p>
-          </div>
-          <Image
-            src="/images/buildingblock.png"
-            alt="Company Logo"
-            width={183}
-            height={73}
-            className="object-contain"
-          />
-          <DropZone onFileUpload={handleFileUpload} maxFiles={1} />
-        </div>
         <div className="grid grid-cols-3 gap-6">
           <TextInput
             id="daycare_id"
@@ -103,19 +74,27 @@ const SchoolManagementAdd = () => {
             variant="square"
             required
           />
-          <TextInput
+          <SelectInput
             id="daycare_name"
             label="Daycare Name"
-            placeholder="Enter daycare name"
+            options={[
+              {
+                label: "Select Daycare",
+                value: "",
+              },
+              {
+                label: "Building Blocks Academy",
+                value: "Building Blocks Academy",
+              },
+            ]}
             register={register}
             errors={errors}
-            variant="square"
             required
           />
           <TextInput
-            id="owner_name"
-            label="Owner Name"
-            placeholder="Enter owner name"
+            id="branch_name"
+            label="Branch Name"
+            placeholder="Enter branch name"
             register={register}
             errors={errors}
             variant="square"
@@ -124,27 +103,30 @@ const SchoolManagementAdd = () => {
         </div>
         <div className="grid grid-cols-2 gap-6">
           <TextInput
-            id="phone"
-            label="Phone"
-            placeholder="Enter phone"
+            id="branch_code"
+            label="Branch Code"
+            placeholder="Enter branch code"
             register={register}
             errors={errors}
             variant="square"
             required
           />
-          <TextInput
-            id="email"
-            label="Email"
-            placeholder="Enter email"
+          <SelectInput
+            id="branch_type"
+            label="Branch Type"
+            options={[
+              { label: "Select Branch Type", value: "" },
+              { label: "Main Branch", value: "Main Branch" },
+              { label: "Sub Branch", value: "Sub Branch" },
+            ]}
             register={register}
             errors={errors}
-            variant="square"
             required
           />
         </div>
         <TextAreaInput
-          id="school_address"
-          label="School Address"
+          id="address"
+          label="Address"
           placeholder="Enter your address"
           register={register}
           errors={errors}
@@ -152,15 +134,6 @@ const SchoolManagementAdd = () => {
           rows={4}
         />
         <div className="grid grid-cols-3 gap-6">
-          <TextInput
-            id="city"
-            label="City"
-            placeholder="Enter city"
-            register={register}
-            errors={errors}
-            variant="square"
-            required
-          />
           <TextInput
             id="state"
             label="State"
@@ -177,6 +150,44 @@ const SchoolManagementAdd = () => {
             register={register}
             errors={errors}
             variant="square"
+            required
+          />
+          <TextInput
+            id="contact_number"
+            label="Contact Number"
+            placeholder="Enter contact number"
+            register={register}
+            errors={errors}
+            variant="square"
+            required
+          />
+        </div>
+        <div className="grid grid-cols-3 gap-6">
+          <TextInput
+            id="email"
+            label="Email"
+            placeholder="Enter email"
+            register={register}
+            errors={errors}
+            variant="square"
+            required
+          />
+          <TextInput
+            id="branch_incharge_name"
+            label="Branch Incharge Name"
+            placeholder="Enter branch incharge name"
+            register={register}
+            errors={errors}
+            variant="square"
+            required
+          />
+          <DateInput
+            id="opening_date"
+            label="Opening Date"
+            register={register}
+            setValue={setValue}
+            watch={watch}
+            errors={errors}
             required
           />
         </div>

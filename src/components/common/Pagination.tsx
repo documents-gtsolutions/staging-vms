@@ -87,7 +87,7 @@ const Pagination = ({
         <button
           onClick={() => paginate(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
-          className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E4E8FF] disabled:bg-[#EEEEEF] disabled:cursor-not-allowed"
         >
           <ArrowLeft size={16} className="text-gray-600" />
         </button>
@@ -111,8 +111,8 @@ const Pagination = ({
               onClick={() => paginate(pageNum)}
               className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-colors ${
                 currentPage === pageNum
-                  ? "bg-[#7C3AED] text-white"
-                  : "text-gray-600 hover:bg-gray-100"
+                  ? "bg-[#9281FF] text-white"
+                  : "text-[#0B0B13] bg-[#E4E8FF] hover:bg-[#9281FF]"
               }`}
             >
               {pageNum}
@@ -137,7 +137,7 @@ const Pagination = ({
         <button
           onClick={() => paginate(Math.min(currentPage + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E4E8FF] disabled:bg-[#EEEEEF] disabled:cursor-not-allowed"
         >
           <ArrowRight size={16} className="text-gray-600" />
         </button>
