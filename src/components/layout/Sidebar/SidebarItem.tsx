@@ -1,78 +1,95 @@
-"use client"
-import { ChevronRight, LucideIcon, Minus } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React, { useState } from 'react'
-import { cn } from '@/lib/utils'
+"use client";
+import { Minus } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import { cn } from "@/lib/utils";
+import { SvgProps } from "@/types";
+import { ChevronRightIcon } from "@/icon";
 
 interface SidebarItemProps {
-  href?: string
-  icon: LucideIcon
-  label: string
+  href?: string;
+  icon: React.ComponentType<SvgProps>;
+  label: string;
   children?: {
-    label: string
-    href: string
-  }[]
-  onClick?: () => void
-  isCollapsed?: boolean
+    label: string;
+    href: string;
+  }[];
+  onClick?: () => void;
 }
 
-const SidebarItem = ({ href, icon: Icon, label, children, onClick, isCollapsed = false }: SidebarItemProps) => {
-  const pathname = usePathname()
+const SidebarItem = ({
+  href,
+  icon: Icon,
+  label,
+  children,
+  onClick,
+}: SidebarItemProps) => {
+  const pathname = usePathname();
   const isActive = pathname === href;
-  const isActiveChild = children?.some(child => pathname === child.href);
-    const [isOpen, setIsOpen] = useState(false)
+  const isActiveChild = children?.some((child) => pathname === child.href);
+  const [isOpen, setIsOpen] = useState(false);
 
-    const handleClick = () => {
-      setIsOpen(!isOpen)
-      onClick?.()
-    }
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+    onClick?.();
+  };
   return (
     <li className="group">
       <Link
         onClick={handleClick || onClick}
-        href={href || ''}
+        href={href || "#"}
         className={cn(
-          "flex items-center justify-between gap-x-3 text-[#475467] text-sm bg-white group-hover:text-[#7752FF] group-hover:font-medium group-hover:bg-[#F4F2FF] px-2 py-2.5 w-full rounded-xl",
-          isActive && "text-[#7752FF] font-medium bg-[#F4F2FF]",
-          isActiveChild && "font-medium bg-[#F4F2FF]",
-          isCollapsed && "justify-center"
+          "flex items-center justify-between gap-x-3 text-[#757575] text-sm bg-white group-hover:text-[#fff] group-hover:font-medium group-hover:bg-[#9281FF] px-2.5 py-2 w-full rounded-md",
+          isActive && "text-[#fff] font-medium bg-[#9281FF]",
+          isActiveChild && "font-medium bg-[#9281FF] text-[#fff]"
         )}
-        title={isCollapsed ? label : undefined}
       >
-        {isCollapsed ? (
-          <Icon size={20} />
-        ) : (
-          <>
-            <div className="flex items-center gap-x-3">
-              <Icon size={20} />
-              <span className='text-nowrap'>{label}</span>
-            </div>
-            {children && (
-              <ChevronRight size={20} className={`text-[#475467] ${isOpen ? 'rotate-90' : ''} transition-all duration-300`} />
-            )}
-          </>
+        <div className="flex items-center gap-x-3">
+          <Icon
+            size={22}
+            className={`fill-[#757575] group-hover:fill-[#fff] ${
+              isActive && "fill-[#fff]"
+            }
+            ${isActiveChild && "fill-[#fff]"}
+            `}
+          />
+          <span className="text-nowrap">{label}</span>
+        </div>
+        {children && (
+          <ChevronRightIcon
+            size={8}
+            className={`fill-[#475467] ${isActive && "fill-[#fff]"} ${isActiveChild && "fill-[#fff]"} ${
+              isOpen ? "rotate-90" : ""
+            } transition-all duration-300`}
+          />
         )}
       </Link>
-      {!isCollapsed && children && isOpen && (
-        <div className="flex flex-col gap-2 my-2">
+      {children && isOpen && (
+        <div className="flex flex-col">
           {children.map((child) => (
-            <Link 
-              href={child.href} 
-              key={child.label} 
-              className={cn(
-                `flex items-center gap-x-3 text-[#475467] text-sm bg-white px-2 py-2.5 w-full rounded-xl text-nowrap`, 
-                pathname === child.href && "text-[#7752FF] font-medium bg-[#F4F2FF]"
-              )}
+            <Link
+              href={child.href}
+              key={child.label}
+              className={cn( `flex items-center text-[#475467] text-sm bg-white px-2 py-2.5 w-full text-nowrap hover:text-[#7752FF] hover:font-medium hover:bg-[#F4F2FF]`, pathname === child.href && "text-[#7752FF] font-medium bg-[#F4F2FF]" )}
             >
-              <span><Minus size={16} className={`${pathname === child.href ? 'text-[#7752FF]' : 'text-[#475467]'} `}/></span>
+              <span>
+                <Minus
+                  size={16}
+                  className={`${
+                    pathname === child.href
+                      ? "text-[#7752FF]"
+                      : "text-[#475467]"
+                  } `}
+                />
+              </span>
               {child.label}
             </Link>
           ))}
         </div>
       )}
     </li>
-  )
-}
+  );
+};
 
-export default SidebarItem
+export default SidebarItem;

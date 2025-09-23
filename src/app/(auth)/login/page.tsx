@@ -40,11 +40,11 @@ export default function LoginPage() {
     (state) => state.auth
   );
 
-  useEffect(() => {
-    if (!loading && user) {
-      router.push("/cms/");
-    }
-  }, [user, userRole, loading, router]);
+  // useEffect(() => {
+  //   if (!loading && user) {
+  //     router.push("/");
+  //   }
+  // }, [user, userRole, loading, router]);
 
   useEffect(() => {
     if (error) {
@@ -68,13 +68,13 @@ export default function LoginPage() {
     }
   };
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  // if (loading) {
+  //   return <LoadingSpinner />;
+  // }
 
-  if (!loading && user) {
-    return null;
-  }
+  // if (!loading && user) {
+  //   return null;
+  // }
 
   return (
     <div className="w-full max-w-[506px] max-h-[483px] mx-auto">

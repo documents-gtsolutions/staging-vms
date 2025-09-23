@@ -23,7 +23,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "VMS System",
-  description: "Virtual Management System",
+  description: "Van Management System",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -41,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <head>
         <meta name="application-name" content="VMS System" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,14 +50,16 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#000000" />
         <meta name="theme-color" content="#000000" />
-        <link rel="icon" href="/icons/favicon.ico" />
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <link rel="icon" href="/images/logo.svg" />
+        <link rel="apple-touch-icon" href="/images/logo.svg" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
       >
         <ReduxProvider>
-          {children}
+          <div className="h-full">
+            {children}
+          </div>
         </ReduxProvider>
       </body>
     </html>

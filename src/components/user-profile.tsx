@@ -24,9 +24,6 @@ export const UserProfile = ({
   
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <div className="flex flex-col items-end text-sm">
-        <span className="font-bold text-base text-[#101828]">{name}</span>
-      </div>
       <div className="relative">
         <Avatar className="h-8 w-8 border border-gray-200">
           {avatarUrl ? (
@@ -36,6 +33,10 @@ export const UserProfile = ({
             {initials}
           </AvatarFallback>
         </Avatar>
+      </div>
+      <div className="flex flex-col">
+        <span className="font-bold text-base text-[#1A1615]">{name}</span>
+        <span className="text-xs text-[#6D6D71]">Admin</span>
       </div>
     </div>
   )
