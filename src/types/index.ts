@@ -20,11 +20,8 @@ export enum NotificationType {
   }
 
   export enum UserRole {
-    OWNER = 1,
-    ADMIN = 2,
-    PARENT = 3,
-    TEACHER = 4,
-    STUDENT = 5,
+    ADMIN = 1,
+    USER = 2,
   }
 
   export type SvgProps = {
